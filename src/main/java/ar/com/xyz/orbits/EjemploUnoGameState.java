@@ -23,6 +23,8 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 	private static final float GREEN = 0.5f ;
 	private static final float BLUE = 0.5f ;
 	
+	EarthEntityController earthEntityController = new EarthEntityController() ;
+	
 	public EjemploUnoGameState() {
 		
 		grabMouseIfNotGrabbed() ;
@@ -37,8 +39,26 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 			entitySpec.setPosition(new Vector3f(0, 0, 0));
 //			entitySpec.setWireframe(false);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
+			createEntity(entitySpec);
+		}
+		
+		{
+			EntitySpec entitySpec = new EntitySpec("esfera") ;
+			entitySpec.setTexture(ColorEnum.RED.getName());
+			entitySpec.setPosition(new Vector3f(0, -1, 0));
+			entitySpec.setWireframe(true);
+			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
+			createEntity(entitySpec);
+		}
+		
+		{
+			EntitySpec entitySpec = new EntitySpec("esfera") ;
+			entitySpec.setTexture(ColorEnum.GREEN.getName());
+			entitySpec.setPosition(new Vector3f(10, 0, 10));
+//			entitySpec.setWireframe(false);
+			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 //			entitySpec.setScale(new Vector3f(.1f,.1f,.1f));
-//			entitySpec.setEntityController(xEntityController);
+			entitySpec.setEntityController(earthEntityController);
 			createEntity(entitySpec);
 		}
 		
@@ -90,7 +110,7 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 	private void setupPlayerAndCamera() {
 
 		setupPlayerAndCamera(
-			new Vector3f(-6, 10, -21),
+			new Vector3f(0, 10, 0),
 			new Vector3f(0, 0, 0), // new Vector3f(0, 0, 0),
 			new Vector3f(1, 1, 1),
 			false,
