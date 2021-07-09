@@ -1,4 +1,4 @@
-package ar.com.xyz.simpledemo;
+package ar.com.xyz.orbits;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -1,4 +1,4 @@
-package ar.com.xyz.simpledemo;
+package ar.com.xyz.orbits;
 
 import ar.com.xyz.gameengine.AbstractMainGameLoop;
 import ar.com.xyz.gameengine.audio.AudioMaster;
@@ -31,8 +31,8 @@ public class XYZOrbitsMainGameLoop extends AbstractMainGameLoop {
 		XYZOrbitsMainGameLoop mainGameLoop = new XYZOrbitsMainGameLoop("Orbits - XYZ Java Game Engine") ;
 		// mainGameLoop.setNextGameState(new XYZDemoLevelGameState(mainGameLoop));
 		// mainGameLoop.setNextGameState(new SimpleDemoMenuGameState(mainGameLoop, "ZIPCLOSE.wav", "stone.png")) ;
-//		mainGameLoop.setNextGameState(SimpleDemoMenuMenuItem.getInstance().getGameStateInstance()) ;
-//		mainGameLoop.loop();
+		mainGameLoop.setNextGameState(OrbitsMenuMenuItem.getInstance().getGameStateInstance()) ;
+		mainGameLoop.loop();
 	}
 
 }
