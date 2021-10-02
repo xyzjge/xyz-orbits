@@ -9,7 +9,7 @@ public class OrbitsMenuMenuItem extends MenuItem {
 	
 	private static final OrbitsMenuMenuItem orbitsMenuMenuItem = new OrbitsMenuMenuItem() ;
 	
-	private static final OrbitsMenuGameState orbitsMenuGameState = new OrbitsMenuGameState("ZIPCLOSE.wav", "blue.png") ;
+	private static final OrbitsMenuGameState orbitsMenuGameState = new OrbitsMenuGameState("ZIPCLOSE.wav", "black.png") ;
 	
 	public OrbitsMenuMenuItem() {
 		setText("MENU PRINCIPAL");

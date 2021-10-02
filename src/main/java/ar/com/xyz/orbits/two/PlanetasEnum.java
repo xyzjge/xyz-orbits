@@ -1,4 +1,4 @@
-package ar.com.xyz.orbits;
+package ar.com.xyz.orbits.two;
 
 public enum PlanetasEnum {
 

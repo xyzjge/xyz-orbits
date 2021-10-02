@@ -1,4 +1,4 @@
-package ar.com.xyz.orbits;
+package ar.com.xyz.orbits.two;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
@@ -11,22 +11,23 @@ import ar.com.xyz.gameengine.input.manager.EventOriginEnum;
 import ar.com.xyz.gameengine.input.manager.EventTypeEnum;
 import ar.com.xyz.gameengine.input.manager.InputEventListener;
 import ar.com.xyz.gameengine.singleton.SingletonManager;
+import ar.com.xyz.orbits.one.EarthEntityController;
 
 /**
- * En https://www.youtube.com/watch?v=73nvOjR8BqA dice que la velocidad de escape es la raiz cuadrada de 2G *(M/R).
+ * En https://www.youtube.com/watch?v=73nvOjR8BqA dice que la velocidad de escape es la raiz cuadrada de 2G * (M/R).
  * Probarlo en la simulacion
  * @author alfredo
  *
  */
-public class EjemploUnoGameState extends AbstractGameState implements InputEventListener {
+public class EjemploDosGameState extends AbstractGameState implements InputEventListener {
 	
-	private static final float RED = 0 ; // 0.5f ;
-	private static final float GREEN = 0 ; // 0.5f ;
-	private static final float BLUE = 0 ; // 0.5f ;
+	private static final float RED = 0.5f ;
+	private static final float GREEN = 0.5f ;
+	private static final float BLUE = 0.5f ;
 	
 	EarthEntityController earthEntityController = new EarthEntityController() ;
 	
-	public EjemploUnoGameState() {
+	public EjemploDosGameState() {
 		
 		grabMouseIfNotGrabbed() ;
 		
@@ -34,27 +35,25 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 		getDefaultColor().y = GREEN ;
 		getDefaultColor().z = BLUE ;
 		
-		{	// Sun
+		{
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.RED.getName());
 			entitySpec.setPosition(new Vector3f(0, 0, 0));
-			entitySpec.setWireframe(true);
+//			entitySpec.setWireframe(false);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			createEntity(entitySpec);
 		}
 		
-		{	// Plano orbital (ponele)
+		{
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
-			entitySpec.setTexture(ColorEnum.WHITE.getName());
-//			entitySpec.setColour(ColorEnum.WHITE.getColor());
-			entitySpec.setPosition(new Vector3f(0, 0, 0));
+			entitySpec.setTexture(ColorEnum.RED.getName());
+			entitySpec.setPosition(new Vector3f(0, -1, 0));
 			entitySpec.setWireframe(true);
-			entitySpec.setScale(new Vector3f(16f,.01f,16f));
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			createEntity(entitySpec);
 		}
 		
-		{	// Planeta que orbita
+		{
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.GREEN.getName());
 			entitySpec.setPosition(new Vector3f(10, 0, 10));
@@ -113,7 +112,7 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 	private void setupPlayerAndCamera() {
 
 		setupPlayerAndCamera(
-			new Vector3f(0, 0, 0),
+			new Vector3f(0, 10, 0),
 			new Vector3f(0, 0, 0), // new Vector3f(0, 0, 0),
 			new Vector3f(1, 1, 1),
 			false,
@@ -136,7 +135,7 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 		getCamera().getCameraController().getRotation().y = lookAt.y ;
 		getCamera().getCameraController().getRotation().z = lookAt.z ;*/
 
-//		this.enableDebug(getPlayer());
+		this.enableDebug(getPlayer());
 		
 		getPlayer().setGravity(0);
 		

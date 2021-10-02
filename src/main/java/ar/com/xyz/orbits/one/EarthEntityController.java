@@ -1,4 +1,4 @@
-package ar.com.xyz.orbits;
+package ar.com.xyz.orbits.one;
 
 import ar.com.xyz.gameengine.entity.EntityController;
 

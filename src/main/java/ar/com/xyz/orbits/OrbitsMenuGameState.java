@@ -9,6 +9,8 @@ import ar.com.xyz.gameengine.input.manager.EventOriginEnum;
 import ar.com.xyz.gameengine.util.AbstractMenuItemBasedMenuGameState;
 import ar.com.xyz.gameengine.util.FontSpec;
 import ar.com.xyz.gameengine.util.MenuItem;
+import ar.com.xyz.orbits.one.EjemploUnoMenuItem;
+import ar.com.xyz.orbits.two.EjemploDosMenuItem;
 
 public class OrbitsMenuGameState extends AbstractMenuItemBasedMenuGameState {
 
