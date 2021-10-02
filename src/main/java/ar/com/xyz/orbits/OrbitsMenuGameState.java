@@ -25,6 +25,7 @@ public class OrbitsMenuGameState extends AbstractMenuItemBasedMenuGameState {
 	protected List<MenuItem> getMenuItemList() {
 		if (menuItemList.size() == 0) {
 			menuItemList.add(EjemploUnoMenuItem.getInstance());
+			menuItemList.add(EjemploDosMenuItem.getInstance());
 		}
 		return menuItemList;
 	}
