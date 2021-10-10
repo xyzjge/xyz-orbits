@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import ar.com.xyz.gameengine.AbstractGameState;
 import ar.com.xyz.gameengine.cameracontroller.LookAtEntityCameraController;
+import ar.com.xyz.gameengine.cameracontroller.ShipCameraController;
 import ar.com.xyz.gameengine.entity.spec.EntitySpec;
 import ar.com.xyz.gameengine.enumerator.ColorEnum;
 import ar.com.xyz.gameengine.enumerator.EntityCollisionTypeEnum;
@@ -66,6 +67,8 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 		}
 		
 		setCameraController(new LookAtEntityCameraController(new Vector3f(25,10,25), earthEntityController.getEntity()));
+		
+		setCameraController(new ShipCameraController(new Vector3f(3,1,3), new Vector3f(0,-10,0))) ;
 		setupPlayerAndCamera();
 	}
 	
@@ -76,6 +79,7 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 //			TODO: mejorar esto ... ( setupInputEventListeners )
 //			setupInputEventListeners(getMainGameLoop(), getPlayer(), null) ;
 			addInputEventListener(this) ;
+			addInputEventListener((InputEventListener)getCamera().getCameraController());
 		}
 	}
 	
