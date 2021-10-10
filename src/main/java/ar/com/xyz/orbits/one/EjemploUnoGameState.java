@@ -4,13 +4,13 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
 import ar.com.xyz.gameengine.AbstractGameState;
+import ar.com.xyz.gameengine.cameracontroller.LookAtEntityCameraController;
 import ar.com.xyz.gameengine.entity.spec.EntitySpec;
 import ar.com.xyz.gameengine.enumerator.ColorEnum;
 import ar.com.xyz.gameengine.enumerator.EntityCollisionTypeEnum;
 import ar.com.xyz.gameengine.input.manager.EventOriginEnum;
 import ar.com.xyz.gameengine.input.manager.EventTypeEnum;
 import ar.com.xyz.gameengine.input.manager.InputEventListener;
-import ar.com.xyz.gameengine.singleton.SingletonManager;
 
 /**
  * En https://www.youtube.com/watch?v=73nvOjR8BqA dice que la velocidad de escape es la raiz cuadrada de 2G *(M/R).
@@ -65,6 +65,7 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 			createEntity(entitySpec);
 		}
 		
+		setCameraController(new LookAtEntityCameraController(new Vector3f(25,10,25), earthEntityController.getEntity()));
 		setupPlayerAndCamera();
 	}
 	
@@ -72,7 +73,8 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 	public void attachedToMainLoop() {
 		super.attachedToMainLoop();
 		if (getInputManager().getNumberOfConfiguredInputEventListener() == 0) {
-			setupInputEventListeners(getMainGameLoop(), getPlayer(), null) ;
+//			TODO: mejorar esto ... ( setupInputEventListeners )
+//			setupInputEventListeners(getMainGameLoop(), getPlayer(), null) ;
 			addInputEventListener(this) ;
 		}
 	}
@@ -112,7 +114,7 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 	
 	private void setupPlayerAndCamera() {
 
-		setupPlayerAndCamera(
+/*		setupPlayerAndCamera(
 			new Vector3f(0, 0, 0),
 			new Vector3f(0, 0, 0), // new Vector3f(0, 0, 0),
 			new Vector3f(1, 1, 1),
@@ -120,17 +122,18 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 			new Vector3f(.5f, 1f, .5f),
 			new Vector3f(.5f, .5f, .5f), null, true,
 			null, true
-		) ;
+		) ;*/
 
 		// getCamera().decPitch(-90);
 		
 //		getPlayer().setCrushHandler(this);
 		
 //		SingletonManager.getInstance().getEntityUtil().lookAt(getPlayer(), new Vector3f(0, 0, 0));
-		
+		/*
 		Vector3f lookAt = SingletonManager.getInstance().getEntityUtil().lookAt3d(getCamera().getCameraController().getPosition(), new Vector3f(0, 0, 0));
 		
 		System.out.println("lookAt: " + lookAt);
+		*/
 		
 /*		getCamera().getCameraController().getRotation().x = -lookAt.x ;
 		getCamera().getCameraController().getRotation().y = lookAt.y ;
@@ -138,8 +141,8 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 
 //		this.enableDebug(getPlayer());
 		
-		getPlayer().setGravity(0);
+//		getPlayer().setGravity(0);
 		
-		enableDebugKeys();
+//		enableDebugKeys();
 	}
 }

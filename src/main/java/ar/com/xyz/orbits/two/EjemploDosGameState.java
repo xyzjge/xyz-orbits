@@ -3,7 +3,7 @@ package ar.com.xyz.orbits.two;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
-import ar.com.xyz.gameengine.AbstractGameState;
+import ar.com.xyz.gameengine.AbstractMainCharacterGameState;
 import ar.com.xyz.gameengine.entity.spec.EntitySpec;
 import ar.com.xyz.gameengine.enumerator.ColorEnum;
 import ar.com.xyz.gameengine.enumerator.EntityCollisionTypeEnum;
@@ -19,7 +19,7 @@ import ar.com.xyz.orbits.one.EarthEntityController;
  * @author alfredo
  *
  */
-public class EjemploDosGameState extends AbstractGameState implements InputEventListener {
+public class EjemploDosGameState extends AbstractMainCharacterGameState implements InputEventListener {
 	
 	private static final float RED = 0.5f ;
 	private static final float GREEN = 0.5f ;
