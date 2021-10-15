@@ -1,8 +1,9 @@
 package ar.com.xyz.orbits.one;
 
+import ar.com.xyz.gameengine.AbstractGameState;
 import ar.com.xyz.gameengine.entity.EntityController;
 
-public class EarthEntityController extends EntityController {
+public class EarthEntityController extends EntityController<AbstractGameState> {
 
 	float vx = 0 ;
 //	float vy = 0.85f ;

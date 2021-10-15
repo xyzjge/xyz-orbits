@@ -69,7 +69,7 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 		setCameraController(new LookAtEntityCameraController(new Vector3f(25,10,25), earthEntityController.getEntity()));
 		
 		setCameraController(new ShipCameraController(new Vector3f(3,1,3), new Vector3f(0,-10,0))) ;
-		setupPlayerAndCamera();
+
 	}
 	
 	@Override
@@ -116,37 +116,4 @@ public class EjemploUnoGameState extends AbstractGameState implements InputEvent
 		
 	}
 	
-	private void setupPlayerAndCamera() {
-
-/*		setupPlayerAndCamera(
-			new Vector3f(0, 0, 0),
-			new Vector3f(0, 0, 0), // new Vector3f(0, 0, 0),
-			new Vector3f(1, 1, 1),
-			false,
-			new Vector3f(.5f, 1f, .5f),
-			new Vector3f(.5f, .5f, .5f), null, true,
-			null, true
-		) ;*/
-
-		// getCamera().decPitch(-90);
-		
-//		getPlayer().setCrushHandler(this);
-		
-//		SingletonManager.getInstance().getEntityUtil().lookAt(getPlayer(), new Vector3f(0, 0, 0));
-		/*
-		Vector3f lookAt = SingletonManager.getInstance().getEntityUtil().lookAt3d(getCamera().getCameraController().getPosition(), new Vector3f(0, 0, 0));
-		
-		System.out.println("lookAt: " + lookAt);
-		*/
-		
-/*		getCamera().getCameraController().getRotation().x = -lookAt.x ;
-		getCamera().getCameraController().getRotation().y = lookAt.y ;
-		getCamera().getCameraController().getRotation().z = lookAt.z ;*/
-
-//		this.enableDebug(getPlayer());
-		
-//		getPlayer().setGravity(0);
-		
-//		enableDebugKeys();
-	}
 }

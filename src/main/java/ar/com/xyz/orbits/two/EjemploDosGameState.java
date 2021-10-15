@@ -3,14 +3,14 @@ package ar.com.xyz.orbits.two;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
-import ar.com.xyz.gameengine.AbstractMainCharacterGameState;
+import ar.com.xyz.gameengine.AbstractGameState;
+import ar.com.xyz.gameengine.cameracontroller.ShipCameraController;
 import ar.com.xyz.gameengine.entity.spec.EntitySpec;
 import ar.com.xyz.gameengine.enumerator.ColorEnum;
 import ar.com.xyz.gameengine.enumerator.EntityCollisionTypeEnum;
 import ar.com.xyz.gameengine.input.manager.EventOriginEnum;
 import ar.com.xyz.gameengine.input.manager.EventTypeEnum;
 import ar.com.xyz.gameengine.input.manager.InputEventListener;
-import ar.com.xyz.gameengine.singleton.SingletonManager;
 import ar.com.xyz.orbits.one.EarthEntityController;
 
 /**
@@ -19,11 +19,11 @@ import ar.com.xyz.orbits.one.EarthEntityController;
  * @author alfredo
  *
  */
-public class EjemploDosGameState extends AbstractMainCharacterGameState implements InputEventListener {
+public class EjemploDosGameState extends AbstractGameState implements InputEventListener {
 	
-	private static final float RED = 0.5f ;
-	private static final float GREEN = 0.5f ;
-	private static final float BLUE = 0.5f ;
+	private static final float RED = 0.1f ;
+	private static final float GREEN = 0.1f ;
+	private static final float BLUE = 0.1f ;
 	
 	EarthEntityController earthEntityController = new EarthEntityController() ;
 	
@@ -35,11 +35,22 @@ public class EjemploDosGameState extends AbstractMainCharacterGameState implemen
 		getDefaultColor().y = GREEN ;
 		getDefaultColor().z = BLUE ;
 		
-		{
+		{	// Sun
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.RED.getName());
 			entitySpec.setPosition(new Vector3f(0, 0, 0));
-//			entitySpec.setWireframe(false);
+			entitySpec.setWireframe(true);
+			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
+			createEntity(entitySpec);
+		}
+		
+		{	// Plano orbital (ponele)
+			EntitySpec entitySpec = new EntitySpec("esfera") ;
+			entitySpec.setTexture(ColorEnum.WHITE.getName());
+//			entitySpec.setColour(ColorEnum.WHITE.getColor());
+			entitySpec.setPosition(new Vector3f(0, 0, 0));
+			entitySpec.setWireframe(true);
+			entitySpec.setScale(new Vector3f(16f,.01f,16f));
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			createEntity(entitySpec);
 		}
@@ -64,15 +75,15 @@ public class EjemploDosGameState extends AbstractMainCharacterGameState implemen
 			createEntity(entitySpec);
 		}
 		
-		setupPlayerAndCamera();
+		setCameraController(new ShipCameraController(new Vector3f(3,1,3), new Vector3f(0,-10,0))) ;
 	}
 	
 	@Override
 	public void attachedToMainLoop() {
 		super.attachedToMainLoop();
 		if (getInputManager().getNumberOfConfiguredInputEventListener() == 0) {
-			setupInputEventListeners(getMainGameLoop(), getPlayer(), null) ;
 			addInputEventListener(this) ;
+			addInputEventListener((InputEventListener)getCamera().getCameraController());
 		}
 	}
 	
@@ -109,36 +120,4 @@ public class EjemploDosGameState extends AbstractMainCharacterGameState implemen
 		
 	}
 	
-	private void setupPlayerAndCamera() {
-
-		setupPlayerAndCamera(
-			new Vector3f(0, 10, 0),
-			new Vector3f(0, 0, 0), // new Vector3f(0, 0, 0),
-			new Vector3f(1, 1, 1),
-			false,
-			new Vector3f(.5f, 1f, .5f),
-			new Vector3f(.5f, .5f, .5f), null, true,
-			null, true
-		) ;
-
-		// getCamera().decPitch(-90);
-		
-//		getPlayer().setCrushHandler(this);
-		
-//		SingletonManager.getInstance().getEntityUtil().lookAt(getPlayer(), new Vector3f(0, 0, 0));
-		
-		Vector3f lookAt = SingletonManager.getInstance().getEntityUtil().lookAt3d(getCamera().getCameraController().getPosition(), new Vector3f(0, 0, 0));
-		
-		System.out.println("lookAt: " + lookAt);
-		
-/*		getCamera().getCameraController().getRotation().x = -lookAt.x ;
-		getCamera().getCameraController().getRotation().y = lookAt.y ;
-		getCamera().getCameraController().getRotation().z = lookAt.z ;*/
-
-		this.enableDebug(getPlayer());
-		
-		getPlayer().setGravity(0);
-		
-		enableDebugKeys();
-	}
 }
