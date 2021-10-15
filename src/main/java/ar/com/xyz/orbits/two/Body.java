@@ -99,9 +99,9 @@ public class Body extends EntityController<AbstractGameState> {
 	public void update(float dt) {
 		
 	}
-		
+	
 	public void update2(float dt) {
-		if (this.fixed) {
+		if (fixed) {
 			return ;
 		}
 //		this.vx += this.ax * dt;      // acceleration affects...

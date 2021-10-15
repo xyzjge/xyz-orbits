@@ -25,7 +25,8 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 	private static final float GREEN = 0.1f ;
 	private static final float BLUE = 0.1f ;
 	
-//	EarthEntityController earthEntityController = new EarthEntityController() ;
+
+	Body earth ;
 	BodySystem bodySystem = new BodySystem() ;
 	
 	public EjemploDosGameState() {
@@ -39,15 +40,27 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 		for(PlanetasEarthEnum planeta : PlanetasEarthEnum.values()) {
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.RED.getName());
+			System.out.println(planeta);
+			System.out.println("semieje mayor: " + planeta.getSemiejeMayorEnUnidadesTerrestres());
 			entitySpec.setPosition(new Vector3f(planeta.getSemiejeMayorEnUnidadesTerrestres(), 0, 0));
 			entitySpec.setWireframe(true);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			
-			Body body = new Body(new Vector3f(planeta.getVelocidadPerihelioEnUnidadesTerrestres(), 0, 0), new Vector3f(), planeta.getMasaEnUnidadesTerrestres()) ;
+			System.out.println("velocidad en perihelio: " + planeta.getVelocidadPerihelioEnUnidadesTerrestres());
+			System.out.println("masa: " + planeta.getMasaEnUnidadesTerrestres());
+			Body body = new Body(
+				new Vector3f(0, 0, planeta.getVelocidadPerihelioEnUnidadesTerrestres()), 
+				new Vector3f(),
+				planeta.getMasaEnUnidadesTerrestres()
+			) ;
 			entitySpec.setEntityController(body);
 			
 			createEntity(entitySpec);
 			bodySystem.add(body);
+			
+			if (planeta == PlanetasEarthEnum.TIERRA) {
+				earth = body ;
+			}
 		}
 		
 		{	// Sun
@@ -58,7 +71,7 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 			entitySpec.setWireframe(true);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			
-			Body body = new Body(new Vector3f(0, 0, 0), new Vector3f(), (float)1.98e+30, true) ;
+			Body body = new Body(new Vector3f(0, 0, 0), new Vector3f(), ((float)(1.98e+30 / PlanetasEarthEnum.TIERRA.getMasa())) / 1000000f, true) ;
 			entitySpec.setEntityController(body);
 			
 			createEntity(entitySpec);
@@ -135,6 +148,7 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 	@Override
 	public void tick(float tpf) {
 		bodySystem.update(tpf);
+		System.out.println("position: " + earth.getEntity().getPosition());
 	}
 	
 }
