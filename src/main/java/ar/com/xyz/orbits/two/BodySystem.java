@@ -33,12 +33,12 @@ public class BodySystem {
 				calcAcc(bodyList.get(i), bodyList.get(j));
 		// update velocities and positions for all bodies
 		for (Body body : bodyList)
-			body.update(dt);
+			body.update2(dt);
 	}
 
 	private void calcAcc(Body body1, Body body2) {
-		float dx = body2.getPosition().x - body1.getPosition().x; // distance x component
-		float dy = body2.getPosition().y - body1.getPosition().y; // distance y component
+		float dx = body2.getEntity().getPosition().x - body1.getEntity().getPosition().x; // distance x component
+		float dy = body2.getEntity().getPosition().y - body1.getEntity().getPosition().y; // distance y component
 		float d2 = dx * dx + dy * dy;   // squared distance
 		float d = (float) Math.sqrt(d2);        // distance
 		float ux = dx / d;              // unitary vector, x comp

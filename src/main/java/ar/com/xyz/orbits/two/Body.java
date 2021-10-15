@@ -2,13 +2,12 @@ package ar.com.xyz.orbits.two;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import ar.com.xyz.gameengine.AbstractGameState;
+import ar.com.xyz.gameengine.entity.EntityController;
 import ar.com.xyz.gameengine.enumerator.ColorEnum;
 
-public class Body {
+public class Body extends EntityController<AbstractGameState> {
 
-//	this.px = this.py = 0; // position
-	private Vector3f position ;
-	
 //	this.vx = this.vy = 0; // velocity
 	private Vector3f velocity ;
 	
@@ -21,43 +20,22 @@ public class Body {
 //	this.r = 0.1;          // radius
 	private float radius ;
 	
-//	this.color = 'white';  // color
-	private ColorEnum color ;
-
 //	this.fixed = false;    // if true, don't update position (for non-heavy suns)
 	private boolean fixed = false ;
 
 //	this.trail = new AngularTrail();
 	
-	public Body(Vector3f position, Vector3f velocity, Vector3f acceleration, float mass, ColorEnum color) {
-		this.position = position;
+	public Body(Vector3f velocity, Vector3f acceleration, float mass) {
 		this.velocity = velocity;
 		this.acceleration = acceleration;
 		this.mass = mass;
-		this.color = color;
 	}
 	
-	public Body(Vector3f position, Vector3f velocity, Vector3f acceleration, float mass, ColorEnum color, boolean fixed) {
-		this.position = position;
+	public Body(Vector3f velocity, Vector3f acceleration, float mass, boolean fixed) {
 		this.velocity = velocity;
 		this.acceleration = acceleration;
 		this.mass = mass;
-		this.color = color;
 		this.fixed = fixed ;
-	}
-
-	public Vector3f getPosition() {
-		return position;
-	}
-	
-	public void setPosition(Vector3f position) {
-		this.position = position;
-	}
-	
-	public void addPosition(float x, float y, float z) {
-		this.velocity.x += x;
-		this.velocity.y += y;
-		this.velocity.z += z;
 	}
 	
 	public Vector3f getVelocity() {
@@ -110,14 +88,6 @@ public class Body {
 		this.radius = radius;
 	}
 	
-	public ColorEnum getColor() {
-		return color;
-	}
-	
-	public void setColor(ColorEnum color) {
-		this.color = color;
-	}
-	
 	public boolean isFixed() {
 		return fixed;
 	}
@@ -127,6 +97,10 @@ public class Body {
 	}
 
 	public void update(float dt) {
+		
+	}
+		
+	public void update2(float dt) {
 		if (this.fixed) {
 			return ;
 		}
@@ -138,7 +112,7 @@ public class Body {
 //			this.py += this.vy * dt;  // ...position
 //			this.trail.update(this.px, this.py);
 //		}
-		addPosition(velocity.x * dt, velocity.y * dt, velocity.z * dt);
+		getEntity().increasePosition(velocity.x * dt, velocity.y * dt, velocity.z * dt);
 
 	}
 

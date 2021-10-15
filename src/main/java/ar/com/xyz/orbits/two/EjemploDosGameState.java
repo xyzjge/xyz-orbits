@@ -25,7 +25,8 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 	private static final float GREEN = 0.1f ;
 	private static final float BLUE = 0.1f ;
 	
-	EarthEntityController earthEntityController = new EarthEntityController() ;
+//	EarthEntityController earthEntityController = new EarthEntityController() ;
+	BodySystem bodySystem = new BodySystem() ;
 	
 	public EjemploDosGameState() {
 		
@@ -35,13 +36,40 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 		getDefaultColor().y = GREEN ;
 		getDefaultColor().z = BLUE ;
 		
+		for(PlanetasEarthEnum planeta : PlanetasEarthEnum.values()) {
+			EntitySpec entitySpec = new EntitySpec("esfera") ;
+			entitySpec.setTexture(ColorEnum.RED.getName());
+			entitySpec.setPosition(new Vector3f(planeta.getSemiejeMayorEnUnidadesTerrestres(), 0, 0));
+			entitySpec.setWireframe(true);
+			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
+			
+			Body body = new Body(new Vector3f(planeta.getVelocidadPerihelioEnUnidadesTerrestres(), 0, 0), new Vector3f(), planeta.getMasaEnUnidadesTerrestres()) ;
+			entitySpec.setEntityController(body);
+			
+			createEntity(entitySpec);
+			bodySystem.add(body);
+		}
+		
 		{	// Sun
+			
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.RED.getName());
 			entitySpec.setPosition(new Vector3f(0, 0, 0));
 			entitySpec.setWireframe(true);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
+			
+			Body body = new Body(new Vector3f(0, 0, 0), new Vector3f(), (float)1.98e+30, true) ;
+			entitySpec.setEntityController(body);
+			
 			createEntity(entitySpec);
+			bodySystem.add(body);
+			
+//			EntitySpec entitySpec = new EntitySpec("esfera") ;
+//			entitySpec.setTexture(ColorEnum.RED.getName());
+//			entitySpec.setPosition(new Vector3f(0, 0, 0));
+//			entitySpec.setWireframe(true);
+//			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
+//			createEntity(entitySpec);
 		}
 		
 		{	// Plano orbital (ponele)
@@ -61,17 +89,6 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 			entitySpec.setPosition(new Vector3f(0, -1, 0));
 			entitySpec.setWireframe(true);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
-			createEntity(entitySpec);
-		}
-		
-		{
-			EntitySpec entitySpec = new EntitySpec("esfera") ;
-			entitySpec.setTexture(ColorEnum.GREEN.getName());
-			entitySpec.setPosition(new Vector3f(10, 0, 10));
-//			entitySpec.setWireframe(false);
-			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
-//			entitySpec.setScale(new Vector3f(.1f,.1f,.1f));
-			entitySpec.setEntityController(earthEntityController);
 			createEntity(entitySpec);
 		}
 		
@@ -117,7 +134,7 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 	////////////////////////////
 	@Override
 	public void tick(float tpf) {
-		
+		bodySystem.update(tpf);
 	}
 	
 }
