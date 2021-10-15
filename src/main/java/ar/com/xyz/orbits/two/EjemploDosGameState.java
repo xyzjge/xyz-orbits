@@ -54,7 +54,7 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			createEntity(entitySpec);
 		}
-		
+ 
 		{
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.RED.getName());
