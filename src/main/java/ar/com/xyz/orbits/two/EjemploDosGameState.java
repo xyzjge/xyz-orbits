@@ -9,9 +9,8 @@ import ar.com.xyz.gameengine.entity.spec.EntitySpec;
 import ar.com.xyz.gameengine.enumerator.ColorEnum;
 import ar.com.xyz.gameengine.enumerator.EntityCollisionTypeEnum;
 import ar.com.xyz.gameengine.input.manager.EventOriginEnum;
-import ar.com.xyz.gameengine.input.manager.EventTypeEnum;
+import ar.com.xyz.gameengine.input.manager.InputEvent;
 import ar.com.xyz.gameengine.input.manager.InputEventListener;
-import ar.com.xyz.orbits.one.EarthEntityController;
 
 /**
  * En https://www.youtube.com/watch?v=73nvOjR8BqA dice que la velocidad de escape es la raiz cuadrada de 2G * (M/R).
@@ -21,6 +20,7 @@ import ar.com.xyz.orbits.one.EarthEntityController;
  */
 public class EjemploDosGameState extends AbstractGameState implements InputEventListener {
 	
+	public static final int DISTANCIA_LOCA = 10;
 	private static final float RED = 0.1f ;
 	private static final float GREEN = 0.1f ;
 	private static final float BLUE = 0.1f ;
@@ -39,20 +39,31 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 		
 		for(PlanetasEarthEnum planeta : PlanetasEarthEnum.values()) {
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
+			entitySpec.setId(planeta.name());
 			entitySpec.setTexture(ColorEnum.RED.getName());
 			System.out.println(planeta);
 			System.out.println("semieje mayor: " + planeta.getSemiejeMayorEnUnidadesTerrestres());
-			entitySpec.setPosition(new Vector3f(planeta.getSemiejeMayorEnUnidadesTerrestres(), 0, 0));
+			entitySpec.setPosition(new Vector3f(planeta.getSemiejeMayorEnUnidadesTerrestres() * DISTANCIA_LOCA, 0, 0));
 			entitySpec.setWireframe(true);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			
 			System.out.println("velocidad en perihelio: " + planeta.getVelocidadPerihelioEnUnidadesTerrestres());
 			System.out.println("masa: " + planeta.getMasaEnUnidadesTerrestres());
-			Body body = new Body(
-				new Vector3f(0, 0, planeta.getVelocidadPerihelioEnUnidadesTerrestres()), 
-				new Vector3f(),
-				planeta.getMasaEnUnidadesTerrestres()
-			) ;
+			Body body ;
+			if (planeta == PlanetasEarthEnum.SOL) {
+				body = new Body(
+					new Vector3f(0, 0, 0),
+					new Vector3f(),
+					planeta.getMasaEnUnidadesTerrestres(),
+					true
+				) ;
+			} else {
+				body = new Body(
+					new Vector3f(0, 0, planeta.getVelocidadPerihelioEnUnidadesTerrestres() * 10), 
+					new Vector3f(),
+					planeta.getMasaEnUnidadesTerrestres()
+				) ;
+			}
 			entitySpec.setEntityController(body);
 			
 			createEntity(entitySpec);
@@ -62,7 +73,7 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 				earth = body ;
 			}
 		}
-		
+/*
 		{	// Sun
 			
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
@@ -84,7 +95,7 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 //			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 //			createEntity(entitySpec);
 		}
-		
+*/
 		{	// Plano orbital (ponele)
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.WHITE.getName());
@@ -96,14 +107,14 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 			createEntity(entitySpec);
 		}
  
-		{
+/*		{
 			EntitySpec entitySpec = new EntitySpec("esfera") ;
 			entitySpec.setTexture(ColorEnum.RED.getName());
 			entitySpec.setPosition(new Vector3f(0, -1, 0));
 			entitySpec.setWireframe(true);
 			entitySpec.setEntityCollisionType(EntityCollisionTypeEnum.NONE);
 			createEntity(entitySpec);
-		}
+		}*/
 		
 		setCameraController(new ShipCameraController(new Vector3f(3,1,3), new Vector3f(0,-10,0))) ;
 	}
@@ -119,8 +130,8 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 	
 	///////////////////////////
 	@Override
-	public boolean handleEvent(EventOriginEnum origin, EventTypeEnum type, int keyOrButton, boolean isRepeatEvent) {
-		switch (keyOrButton) {
+	public boolean handleEvent(InputEvent inputEvent) {
+		switch (inputEvent.getEventKeyOrButton()) {
 		case Keyboard.KEY_G: {
 		}
 		break;
@@ -133,22 +144,24 @@ public class EjemploDosGameState extends AbstractGameState implements InputEvent
 	}
 
 	@Override
-	public boolean accept(EventOriginEnum origin, EventTypeEnum type, int keyOrButton, boolean isRepeatEvent) {
-		if (origin == EventOriginEnum.KEYBOARD) {
+	public boolean accept(InputEvent inputEvent) {
+		if (inputEvent.getOrigin() == EventOriginEnum.KEYBOARD) {
 			return true ;
 		}
 		return false;
 	}
 
-	@Override
-	public void tick() {
-		
-	}
 	////////////////////////////
 	@Override
 	public void tick(float tpf) {
 		bodySystem.update(tpf);
 		System.out.println("position: " + earth.getEntity().getPosition());
+	}
+
+	@Override
+	public void tickInputEventListener(float tpf) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

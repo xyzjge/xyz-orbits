@@ -7,10 +7,10 @@ public class BodySystem {
 
 	private List<Body> bodyList = new ArrayList<>() ;
 	
-	private static final float G = 1 ;
+	private static final float G = .01f ;
 	
 	// Para particionar los calculos (TODO)
-	private static final float NREPS = 1 ;
+	private static final float NREPS = 10 ;
 
 	public void add(Body body) {
 		bodyList.add(body) ;
@@ -41,10 +41,24 @@ public class BodySystem {
 		float dz = body2.getEntity().getPosition().z - body1.getEntity().getPosition().z; // distance z component
 		float d2 = dx * dx + dz * dz;   // squared distance
 		float d = (float) Math.sqrt(d2);        // distance
+		
+		// d es la distancia entre ambos cuerpos
+		System.out.println("Distancia entre ambos cuerpos: " + d);
+		
+		// Vector unitario direccion de body1 a body2
 		float ux = dx / d;              // unitary vector, x comp
 		float uz = dz / d;              // unitary vector
+		
+		
 		float a1 = G * body2.getMass() / d2; // scalar acc, body 1
 		float a2 = G * body1.getMass() / d2; // scalar acc, body 2
+		
+		System.out.println("a1: " + a1);
+		System.out.println("a2: " + a2);
+		
+//		a1 = a1 /10 ;
+//		a2 = a2 /10 ;
+		
 //		body1.ax +=  ux * a1;  // body 1 acc, x component
 //		body1.ay +=  uy * a1;  // body 1 acc, y component
 		body1.addAcceleration(ux * a1, 0, uz * a1);

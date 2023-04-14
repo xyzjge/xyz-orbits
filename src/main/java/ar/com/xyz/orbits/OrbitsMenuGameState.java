@@ -33,8 +33,9 @@ public class OrbitsMenuGameState extends AbstractMenuItemBasedMenuGameState {
 	}
 
 	@Override
-	public void tick() {
+	public void tickInputEventListener(float tpf) {
+		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

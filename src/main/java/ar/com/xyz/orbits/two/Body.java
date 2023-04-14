@@ -4,7 +4,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 import ar.com.xyz.gameengine.AbstractGameState;
 import ar.com.xyz.gameengine.entity.EntityController;
-import ar.com.xyz.gameengine.enumerator.ColorEnum;
 
 public class Body extends EntityController<AbstractGameState> {
 
@@ -104,6 +103,7 @@ public class Body extends EntityController<AbstractGameState> {
 		if (fixed) {
 			return ;
 		}
+//		System.out.println("acceleration: " + acceleration);
 //		this.vx += this.ax * dt;      // acceleration affects...
 //		this.vy += this.ay * dt;      // ...velocity;
 		addVelocity(acceleration.x * dt, acceleration.y * dt, acceleration.z * dt);
@@ -112,7 +112,14 @@ public class Body extends EntityController<AbstractGameState> {
 //			this.py += this.vy * dt;  // ...position
 //			this.trail.update(this.px, this.py);
 //		}
-		getEntity().increasePosition(velocity.x * dt, velocity.y * dt, velocity.z * dt);
+		
+		System.out.println("velocity: " + velocity);
+		
+		getEntity().increasePosition(
+			( (velocity.x * dt) / PlanetasEarthEnum.TIERRA.getSemiejeMayor()) * EjemploDosGameState.DISTANCIA_LOCA, 
+			( (velocity.y * dt) / PlanetasEarthEnum.TIERRA.getSemiejeMayor()) * EjemploDosGameState.DISTANCIA_LOCA, 
+			( (velocity.z * dt) / PlanetasEarthEnum.TIERRA.getSemiejeMayor()) * EjemploDosGameState.DISTANCIA_LOCA
+		);
 
 	}
 
